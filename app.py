@@ -36,5 +36,5 @@ class Preprocessor(Resource):
                 'vector_doc1': cow_boy_output['vectors'][0],'vector_doc2':cow_boy_output['vectors'][1],
                 'cosine_value': cow_boy_output['cosine_similarity']}
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

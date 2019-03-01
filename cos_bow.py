@@ -26,10 +26,12 @@ class VectorCreation:
 
     def vectorizer(self):
         text = { 'Rawtext1': "Marijuana is legal in some countries. It is illegal in others. For example, it is illegal in south east Asian countries.However, Thailand changes this.It becomes the first south east Asian country to make marijuana legal.People can sell it and buy it.They can use it as medicine.The Thai government controls, who sells marijuana. You can use it. However, you must have a certificate.",'Rawtext2' :" It is illegal in others. For example, it is illegal in south east Asian countries.However, Thailand changes this.It becomes the first south east Asian country to make marijuana legal.People can sell it and buy it.They can use it as medicine.The Thai government controls, who sells marijuana. You can use it. However, you must have a certificate.Marijuana is legal in some countries." };
-        json_str = json.dumps(text)
-        resp = json.loads(json_str)
-        a= str(resp['Rawtext1'])
-        b= str(resp['Rawtext2'])
+        json_str1 = json.dumps(self.input_text1)
+        json_str2 = json.dumps(self.input_text2)
+        resp1 = json.loads(json_str1)
+        resp2 = json.loads(json_str2)
+        a= str(resp1)
+        b= str(resp2)
         tokens = sorted(set(self.text_preprocessing(a)+self.text_preprocessing(b)))
         bag_of_words_a = []
         bag_of_words_b = []

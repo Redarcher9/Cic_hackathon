@@ -7,7 +7,7 @@ UPLOAD_FOLDER = 'docs/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf'])
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER   
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -34,14 +34,13 @@ def upload_file():
             return redirect(url_for('uploaded_file',
                                     filename=filename))
     return render_template("upload.html")
-       
-    
+
+
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)   
-    
+                               filename)
+
 if __name__ == "__main__":
-    app.run(port=4555,debug=True)       
-    
+    app.run(port=4555,debug=True)
