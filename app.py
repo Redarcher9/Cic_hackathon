@@ -55,6 +55,8 @@ class Wordnet(Resource):
         print(wordnet_results,file=sys.stderr)
         return {'tokens1' : wordnet_results["tokens1"],
                 'tokens2': wordnet_results["tokens2"],
+                'synsets1': wordnet_results["synsets1"],
+                'synsets2': wordnet_results["synsets2"],
                 'similarity_score' : wordnet_results["similarity_score"]}
 
 @api.route('/FileUpload')
