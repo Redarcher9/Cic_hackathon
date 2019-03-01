@@ -69,7 +69,6 @@ class FileUpload(Resource):
         #Stopwords elimination begins here
         input_text1 = miner(resp['base64_1'],resp['extension_1'])
         input_text2 = miner(resp['base64_2'],resp['extension_2'])
-        print (input_text1.text_extractor().lower())
         doc11=Stopwords(input_text1.text_extractor().lower())
         doc12=Tfcompute(doc11)
         doc21=Stopwords(input_text2.text_extractor().lower())
@@ -84,6 +83,28 @@ class FileUpload(Resource):
                 'token_doc2': tokenised_text_doc2,'term_frequencies_doc2': wordfreqdict_doc2,
                 'vector_doc1': cow_boy_output['vectors'][0],'vector_doc2':cow_boy_output['vectors'][1],
                 'cosine_value': cow_boy_output['cosine_similarity']}
+
+@api.route('/FileUploadWordnet')
+class Wordnet(Resource):
+    @api.expect(file_model)
+    def post(self):
+        input_text = api.payload
+        json_str = json.dumps(input_text)
+        resp = json.loads(json_str)
+        input_text = api.payload
+        #dumps the json object into an element
+        json_str = json.dumps(input_text)
+        #load the json to a string
+        resp = json.loads(json_str)
+        #Stopwords elimination begins here
+        input_text1 = miner(resp['base64_1'],resp['extension_1'])
+        input_text2 = miner(resp['base64_2'],resp['extension_2'])
+        doc1=wordnet(input_text1.text_extractor().lower(),input_text2.text_extractor().lower())
+        wordnet_results=doc1.compute_wn_resullts()
+        return {'tokens1' : wordnet_results["tokens1"],
+                'tokens2': wordnet_results["tokens2"],
+                'similarity_score' : wordnet_results["similarity_score"]}
+
 
 
 if __name__ == "__main__":
