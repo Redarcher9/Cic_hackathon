@@ -7,6 +7,7 @@ from flask_restplus import reqparse
 from werkzeug.datastructures import FileStorage
 from wn_1 import wordnet
 import sys
+from extract import miner
 app = Flask(__name__)
 api = Api(app)
 raw_text = api.model('Rawtext', {'Input1' : fields.String('Your Input.'),
@@ -55,7 +56,7 @@ class Wordnet(Resource):
                 'tokens2': wordnet_results["tokens2"],
                 'similarity_score' : wordnet_results["similarity_score"]}
 
-"""@api_route('/FileUpload')
+@api.route('/FileUpload')
 class FileUpload(Resource):
     @api.expect(file_model)
     def post(self):
@@ -65,7 +66,10 @@ class FileUpload(Resource):
         #load the json to a string
         resp = json.loads(json_str)
         #Stopwords elimination begins here
-"""
+        input_text1 = miner(resp['base64'],resp['extension'])
+        return {
+        'text': input_text1.text_extractor()
+        }
 
 if __name__ == "__main__":
     app.run(port=4555,debug=True)
