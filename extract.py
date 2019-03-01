@@ -18,9 +18,10 @@ class miner():
                 pdf = PdfFileReader(f)
                 text = ""
                 for page in range(pdf.getNumPages()):
-                    page = pdf.getPage(page)
-                    text += page.extractText()
-                os.remove("sample.pdf")
+                    page1 = pdf.getPage(page)
+                    text += page1.extractText()
+                return text
+
 
         if (self.extension == str(2)):
             with open("sample.docx", "wb+") as f:

@@ -71,6 +71,7 @@ class FileUpload(Resource):
         #Stopwords elimination begins here
         input_text1 = miner(resp['base64_1'],resp['extension_1'])
         input_text2 = miner(resp['base64_2'],resp['extension_2'])
+        print(input_text1.text_extractor().lower(),file=sys.stderr)
         doc11=Stopwords(input_text1.text_extractor().lower())
         doc12=Tfcompute(doc11)
         doc21=Stopwords(input_text2.text_extractor().lower())
@@ -101,6 +102,7 @@ class Wordnet(Resource):
         #Stopwords elimination begins here
         input_text1 = miner(resp['base64_1'],resp['extension_1'])
         input_text2 = miner(resp['base64_2'],resp['extension_2'])
+
         doc1=wordnet(input_text1.text_extractor().lower(),input_text2.text_extractor().lower())
         wordnet_results=doc1.compute_wn_resullts()
         return {'tokens1' : wordnet_results["tokens1"],
