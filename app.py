@@ -12,8 +12,9 @@ app = Flask(__name__)
 api = Api(app)
 raw_text = api.model('Rawtext', {'Input1' : fields.String('Your Input.'),
 'Input2': fields.String('Your Input.') })
-file_model = api.model('filemodel', {'base64' : fields.String('base64'),
-'extension': fields.String('extension')})
+file_model = api.model('filemodel', {'base64_1' : fields.String('base64'),
+'extension_1': fields.String('extension'),'base64_2' : fields.String('base64'),
+'extension_2': fields.String('extension')})
 
 @api.route('/Preprocessor')
 class Preprocessor(Resource):
@@ -66,10 +67,24 @@ class FileUpload(Resource):
         #load the json to a string
         resp = json.loads(json_str)
         #Stopwords elimination begins here
-        input_text1 = miner(resp['base64'],resp['extension'])
-        return {
-        'text': input_text1.text_extractor()
-        }
+        input_text1 = miner(resp['base64_1'],resp['extension_1'])
+        input_text2 = miner(resp['base64_2'],resp['extension_2'])
+        print (input_text1.text_extractor().lower())
+        doc11=Stopwords(input_text1.text_extractor().lower())
+        doc12=Tfcompute(doc11)
+        doc21=Stopwords(input_text2.text_extractor().lower())
+        doc22=Tfcompute(doc21)
+        doc13=VectorCreation(input_text1.text_extractor().lower(),input_text2.text_extractor().lower())
+        tokenised_text_doc1=doc11.nontrivial_words()
+        wordfreqdict_doc1=doc12.wordListToFreqDict()
+        tokenised_text_doc2=doc21.nontrivial_words()
+        wordfreqdict_doc2=doc22.wordListToFreqDict()
+        cow_boy_output=doc13.vectorizer()
+        return {'tokens_doc1' : tokenised_text_doc1,'term_frequencies_doc1': wordfreqdict_doc1,
+                'token_doc2': tokenised_text_doc2,'term_frequencies_doc2': wordfreqdict_doc2,
+                'vector_doc1': cow_boy_output['vectors'][0],'vector_doc2':cow_boy_output['vectors'][1],
+                'cosine_value': cow_boy_output['cosine_similarity']}
+
 
 if __name__ == "__main__":
     app.run(port=4555,debug=True)

@@ -9,7 +9,8 @@ class Stopwords:
         self.input_text = input_text
 
     def eliminator(self):
-        stop_words = set(stopwords.words('english'))
+        stop_words = set(stopwords.words('english')+stopwords.words('danish')+stopwords.words('german')+stopwords.words('russian')
+        +stopwords.words('turkish')+stopwords.words('french'))
         tokenizer = RegexpTokenizer(r'\w+')
         word_tokens = tokenizer.tokenize(self.input_text)                           #removes punctuations
         filtered_sentence = [w for w in word_tokens if not w in stop_words]         #removes stop_words

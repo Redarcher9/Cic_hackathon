@@ -2,6 +2,7 @@ from PyPDF2 import PdfFileReader
 import docxpy
 import base64
 import sys
+import os
 class miner():
     def __init__(self,coded_string,extension):
         self.coded_string=coded_string
@@ -19,12 +20,14 @@ class miner():
                 for page in range(pdf.getNumPages()):
                     page = pdf.getPage(page)
                     text += page.extractText()
+                os.remove("sample.pdf")
 
         if (self.extension == str(2)):
             with open("sample.docx", "wb+") as f:
                 f.write(base64.b64decode(self.coded_string))
             file = 'sample.docx'
             text = docxpy.process(file)
+            os.remove("sample.docx")
 
 
         if (self.extension == str(3)):
@@ -35,4 +38,5 @@ class miner():
             file.close()
             for line in lines:
                 text += line
+            os.remove("sample.txt")
         return text

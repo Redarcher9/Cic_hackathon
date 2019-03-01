@@ -15,7 +15,8 @@ class VectorCreation:
     def text_preprocessing(self,text):
         final_list = []
         tokens = word_tokenize(text.lower())
-        stopwords_and_punctuations_list = stopwords.words("english")+list(string.punctuation)
+        stopwords_and_punctuations_list = set(stopwords.words('english')+stopwords.words('danish')+stopwords.words('german')+stopwords.words('russian')
+        +stopwords.words('turkish')+stopwords.words('french')+list(string.punctuation))
         for word in tokens:
             if word not in stopwords_and_punctuations_list:
                 final_list.append(word_net_lemmatizer.lemmatize(word))
