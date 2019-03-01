@@ -20,7 +20,7 @@ class miner():
                 for page in range(pdf.getNumPages()):
                     page1 = pdf.getPage(page)
                     text += page1.extractText()
-                return text
+                os.remove("sample.pdf")
 
 
         if (self.extension == str(2)):
